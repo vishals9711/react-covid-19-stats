@@ -70,5 +70,44 @@
 .tableOverlay {
     position: absolute;
     top: 756px;
-    left: 104px;
+    /* left: 104px; */
+}
+
+// .map {
+//     /* display: flex; */
+// }
+.pieName {
+    span {
+        top: 340px;
+    }
+    /* display: flex;
+    position: absolute;
+    top: 343px;
+    right: 1px; */
+}
+
+.filter {
+    float: right;
+    input {
+        padding: 7px;
+    }
+    button {
+        display: contents;
+        height: 100%;
+    }
+}
+
+.header {
+    display: flex;
+    padding-top: 7px;
+    float: left;
+}
+
+.countryNumber {
+    float: left;
+    padding: 7px;
+}
+
+.cardFixedHeight {
+    height: 431px;
 }

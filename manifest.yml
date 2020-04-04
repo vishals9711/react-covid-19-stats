@@ -1,0 +1,4 @@
+applications:
+  - name: covid-19-react-app
+    memory: 64M
+    buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
