@@ -11,7 +11,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DataTable from "react-data-table-component";
-import ReactFusioncharts from "react-fusioncharts";
+// import ReactFusioncharts from "react-fusioncharts";
 ReactFC.fcRoot(FusionCharts, FusionMaps, India, FusionTheme);
 
 const chartConfigs = {
