@@ -18,8 +18,8 @@ ReactFC.fcRoot(FusionCharts, FusionMaps, WorldWithCountries, FusionTheme);
 const configArr = config.COUNTRY_ARR;
 const chartConfigs = {
   type: "maps/worldwithcountries",
-  width: "1000",
-  height: "1000",
+  width: "100%",
+  height: "500",
   dataFormat: "json",
   dataSource: {
     chart: {
@@ -43,13 +43,14 @@ const chartConfigs = {
   searchString: "",
 };
 class MainChartComponent extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = chartConfigs;
     this.entityRollover = this.entityRollover.bind(this);
     this.entityRollout = this.entityRollout.bind(this);
     this.entityClick = this.entityClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     // axios.get('https://api.covid19api.com/summary').then(response => {
@@ -113,7 +114,6 @@ class MainChartComponent extends React.Component {
                 .find((data) => data.Label === country.trim())
                 ["ID"].toString(),
               value: val[val.length - 1].confirmed,
-              dataValue: { as: "asd" },
             });
             confirm += val[val.length - 1].confirmed;
             recovered += val[val.length - 1].recovered;
@@ -248,6 +248,11 @@ class MainChartComponent extends React.Component {
       );
     }
   }
+  handleClick = (value) => {
+    console.log(value);
+    this.props.mapClick(value);
+  };
+
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -255,45 +260,50 @@ class MainChartComponent extends React.Component {
   render() {
     return this.state.dataSource["data"].length > 0 ? (
       <div>
-        {/* </h2> */}
         <Container fluid>
           <Row>
-            <Col lg={8}>
-              <div className="map">
+            <Col>
+              <Cards
+                confirm={this.numberWithCommas(
+                  this.state.countryStats.totalConfirmed
+                )}
+                active={this.numberWithCommas(
+                  this.state.countryStats.totalActive
+                )}
+                recovered={this.numberWithCommas(
+                  this.state.countryStats.totalRecovered
+                )}
+                deceased={this.numberWithCommas(
+                  this.state.countryStats.totalDeceased
+                )}
+                country={this.state.countryStats.country}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <div className="height75">
+              <Col lg={9} md={12} className="floatleft">
+                {/* <div className="map"> */}
                 <ReactFC
                   {...this.state}
                   fcEvent-entityRollover={this.entityRollover}
                   fcEvent-entityRollout={this.entityRollout}
                   fcEvent-entityClick={this.entityClick}
                 />
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="pieName">
+                {/* </div> */}
+              </Col>
+              <Col lg={3} md={12} className="floatleft height100">
+                <div className="pieName">
                 <Piechart
                   active={this.state.countryStats.totalActive}
                   recovered={this.state.countryStats.totalRecovered}
                   deceased={this.state.countryStats.totalDeceased}
                 />
-              </div>
-            </Col>
+                </div>
+              </Col>
+            </div>
           </Row>
         </Container>
-        <Cards
-          confirm={this.numberWithCommas(
-            this.state.countryStats.totalConfirmed
-          )}
-          active={this.numberWithCommas(this.state.countryStats.totalActive)}
-          recovered={this.numberWithCommas(
-            this.state.countryStats.totalRecovered
-          )}
-          deceased={this.numberWithCommas(
-            this.state.countryStats.totalDeceased
-          )}
-          country={this.state.countryStats.country}
-        />
-        {/* <Container> */}
-        {/* </Container> */}
         <Container className="tableOverlay" fluid>
           <Row>
             <Col>
@@ -330,6 +340,7 @@ class MainChartComponent extends React.Component {
                       ? this.state.filterCountryInfo
                       : this.state.countryInfo
                   }
+                  onTableExample={this.handleClick}
                 />
               </Card>
             </Col>

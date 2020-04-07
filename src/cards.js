@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 function Cards(props) {
   // render() {
   return (
-    <div className="overlayClass">
+    <div >
       <Container>
         <h2>{props.country}</h2>
         <Row>

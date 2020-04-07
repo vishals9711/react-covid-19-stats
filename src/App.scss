@@ -54,9 +54,9 @@
 }
 
 .overlayClass {
-    position: relative;
-    z-index: 1;
-    bottom: 956px;
+    // position: relative;
+    // z-index: 1;
+    // bottom: 956px;
 }
 
 .raphael-group-45-fc-gradient-legend {
@@ -68,8 +68,8 @@
 }
 
 .tableOverlay {
-    position: absolute;
-    top: 756px;
+    // position: absolute;
+    // top: 756px;
     /* left: 104px; */
 }
 
@@ -77,13 +77,15 @@
 //     /* display: flex; */
 // }
 .pieName {
-    span {
-        top: 340px;
-    }
-    /* display: flex;
-    position: absolute;
-    top: 343px;
-    right: 1px; */
+    display: block;
+    height: 100%;
+    // span {
+    //     top: 340px;
+    // }
+    // display: flex;
+    // position: absolute;
+    // top: 343px;
+    // right: 1px;
 }
 
 .filter {
@@ -94,6 +96,10 @@
     button {
         display: contents;
         height: 100%;
+        span {
+            display: inline;
+            padding-left: 5px;
+        }
     }
 }
 
@@ -110,4 +116,32 @@
 
 .cardFixedHeight {
     height: 431px;
+    margin-bottom: 1rem;
+}
+
+.fullHeight {
+    height: 100vh;
+}
+
+.floatRight {
+    float: right;
+}
+
+.countryPieChart {
+    // height: 25vh;
+}
+
+.height75 {
+    // display: block;
+    height: 84vh;
+    width: 100vw;
+}
+
+.floatleft {
+    float: left;
+}
+
+.height100 {
+    height: 100%;
+    display: block;
 }
