@@ -82,7 +82,7 @@ class Piechart extends Component {
         return ( <
             ReactFusioncharts type = "pie2d"
             width = "100%"
-            height = "80%"
+            height = "100%"
             dataFormat = "JSON"
             dataSource = { this.state.dataSource }
             />

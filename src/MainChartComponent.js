@@ -222,7 +222,11 @@ class MainChartComponent extends React.Component {
       },
     });
   }
-  entityClick(eventObj, dataObj) {}
+  entityClick(eventObj, dataObj) {
+    console.log(eventObj);
+    this.props.mapClick(dataObj);
+    console.log(dataObj);
+  }
   handleChange(e) {
     // console.log(e);
     // console.log(this.state);
@@ -292,13 +296,13 @@ class MainChartComponent extends React.Component {
                 />
                 {/* </div> */}
               </Col>
-              <Col lg={3} md={12} className="floatleft height100">
+              <Col lg={3} md-none={12} sm-none={12} className="floatleft height100 pieChartShow">
                 <div className="pieName">
-                <Piechart
-                  active={this.state.countryStats.totalActive}
-                  recovered={this.state.countryStats.totalRecovered}
-                  deceased={this.state.countryStats.totalDeceased}
-                />
+                  <Piechart
+                    active={this.state.countryStats.totalActive}
+                    recovered={this.state.countryStats.totalRecovered}
+                    deceased={this.state.countryStats.totalDeceased}
+                  />
                 </div>
               </Col>
             </div>

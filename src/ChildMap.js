@@ -80,6 +80,75 @@ const chartConfigs = {
         row.death.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
     },
   ],
+  lineChart: {
+    type: "msline",
+    width: "100%",
+    height: "328",
+    dataFormat: "json",
+    dataSource: {
+      chart: {
+        caption: "Confirmed Cases",
+        // "subCaption": "Bakersfield Central vs Los Angeles Topanga",
+        xAxisName: "Date",
+        theme: "fusion",
+      },
+      categories: [],
+      dataset: [
+        {
+          seriesname: "Total cases",
+        },
+        {
+          seriesname: "Daily cases",
+        },
+      ],
+    },
+  },
+  deathChart: {
+    type: "msline",
+    width: "100%",
+    height: "328",
+    dataFormat: "json",
+    dataSource: {
+      chart: {
+        caption: "Deaceased Cases",
+        // "subCaption": "Bakersfield Central vs Los Angeles Topanga",
+        xAxisName: "Date",
+        theme: "fusion",
+      },
+      categories: [],
+      dataset: [
+        {
+          seriesname: "Total cases",
+        },
+        {
+          seriesname: "Daily cases",
+        },
+      ],
+    },
+  },
+  recoveredChart: {
+    type: "msline",
+    width: "100%",
+    height: "328",
+    dataFormat: "json",
+    dataSource: {
+      chart: {
+        caption: "Recovered Cases",
+        // "subCaption": "Bakersfield Central vs Los Angeles Topanga",
+        xAxisName: "Date",
+        theme: "fusion",
+      },
+      categories: [],
+      dataset: [
+        {
+          seriesname: "Total cases",
+        },
+        {
+          seriesname: "Daily cases",
+        },
+      ],
+    },
+  },
 };
 
 export class ChildMap extends Component {
@@ -204,6 +273,92 @@ export class ChildMap extends Component {
           );
           console.log(this.state);
         }
+        if (response.data && response.data.cases_time_series) {
+          let category = [];
+          let totalData = [];
+          let dailyData = [];
+          let totalDataDeaths = [];
+          let dailyDataDeaths = [];
+          let totalDataRecovered = [];
+          let dailyDataRecovered = [];
+          response.data.cases_time_series.forEach((data) => {
+            category.push({ label: data.date });
+            totalData.push({ value: data.totalconfirmed });
+            dailyData.push({ value: data.dailyconfirmed });
+            totalDataDeaths.push({ value: data.totaldeceased });
+            dailyDataDeaths.push({ value: data.dailydeceased });
+            totalDataRecovered.push({ value: data.totalrecovered });
+            dailyDataRecovered.push({ value: data.dailyrecovered });
+          });
+          let dupState = JSON.parse(JSON.stringify(this.state));
+          dupState.lineChart.dataSource = {
+            chart: {
+              caption: "Confirmed Cases",
+              xAxisName: "Date",
+              theme: "fusion",
+            },
+            categories: [
+              {
+                category: category,
+              },
+            ],
+            dataset: [
+              {
+                seriesname: "Total cases",
+                data: totalData,
+              },
+              {
+                seriesname: "Daily cases",
+                data: dailyData,
+              },
+            ],
+          };
+          dupState.deathChart.dataSource = {
+            chart: {
+              caption: "Deceased Cases",
+              xAxisName: "Date",
+              theme: "fusion",
+            },
+            categories: [
+              {
+                category: category,
+              },
+            ],
+            dataset: [
+              {
+                seriesname: "Total cases",
+                data: totalDataDeaths,
+              },
+              {
+                seriesname: "Daily cases",
+                data: dailyDataDeaths,
+              },
+            ],
+          };
+          dupState.recoveredChart.dataSource = {
+            chart: {
+              caption: "Recovered Cases",
+              xAxisName: "Date",
+              theme: "fusion",
+            },
+            categories: [
+              {
+                category: category,
+              },
+            ],
+            dataset: [
+              {
+                seriesname: "Total cases",
+                data: totalDataRecovered,
+              },
+              {
+                seriesname: "Daily cases",
+                data: dailyDataRecovered,
+              },
+            ],
+          };
+          this.setState(dupState);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -212,18 +367,9 @@ export class ChildMap extends Component {
   render() {
     return (
       <Container fluid>
-        {/* <Row>
-          <Col>
-           
-          </Col>
-        </Row> */}
         <Row>
-          {" "}
-          <Col lg={6} md={12} className="fullHeight">
-            <ReactFC {...this.state} />{" "}
-          </Col>
-          <Col lg={6} md={12}>
-            <h2>
+          <Col>
+            <h2 className="countryName">
               India
               <button
                 onClick={this.handleClick}
@@ -233,7 +379,14 @@ export class ChildMap extends Component {
                 Go Back{" "}
               </button>
             </h2>
-
+          </Col>
+        </Row>
+        <Row>
+          {" "}
+          <Col lg={6} md={12} className="fullHeight">
+            <ReactFC {...this.state} />
+          </Col>
+          <Col lg={6} md={12}>
             {/* <div class="countryPieChart">
               <ReactFusioncharts
                 type="pie2d"
@@ -251,9 +404,20 @@ export class ChildMap extends Component {
               fixedHeaderScrollHeight="300px"
               noHeader
               responsive={true}
-              // compact={true}
-              // overflow={true}
             />
+            {this.state.lineChart ? (
+              <div>
+                <ReactFC {...this.state.lineChart} />
+              </div>
+            ) : null}
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={6} md={12} className="fullHeight100">
+            <ReactFC {...this.state.recoveredChart} />
+          </Col>
+          <Col lg={6} md={12} className="fullHeight100">
+            <ReactFC {...this.state.deathChart} />
           </Col>
         </Row>
       </Container>

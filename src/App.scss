@@ -107,6 +107,7 @@
     display: flex;
     padding-top: 7px;
     float: left;
+    font-size: 2vw;
 }
 
 .countryNumber {
@@ -115,7 +116,7 @@
 }
 
 .cardFixedHeight {
-    height: 431px;
+    // height: 431px;
     margin-bottom: 1rem;
 }
 
@@ -133,7 +134,7 @@
 
 .height75 {
     // display: block;
-    height: 84vh;
+    height: 90vh;
     width: 100vw;
 }
 
@@ -144,4 +145,24 @@
 .height100 {
     height: 100%;
     display: block;
+}
+
+.countryName {
+    text-align: center;
+    padding: 8px;
+}
+
+.fullHeight100 {
+    height: 328px;
+}
+
+@media (max-width: 767px) {
+    .pieChartShow {
+        display: none;
+    }
+    .height75 {
+        // display: block;
+        height: 50vh;
+        // width: 100vw;
+    }
 }
